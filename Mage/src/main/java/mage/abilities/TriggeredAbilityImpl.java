@@ -270,7 +270,7 @@ public abstract class TriggeredAbilityImpl extends AbilityImpl implements Trigge
                     // If an ability triggers when the object that has it is put into a hidden zone from a graveyard,
                     // that ability triggers from the graveyard, (such as Golgari Brownscale),
                     // Yixlid Jailer will prevent that ability from triggering.
-                    if (zce.getFromZone().match(Zone.GRAVEYARD)) {
+                    if (Zone.GRAVEYARD.match(zce.getFromZone())) {
                         if (!CardUtil.cardHadAbility(this, game.getLastKnownInformationCard(getSourceId(), zce.getFromZone()), getSourceId(), game)) {
                             return false;
                         }
@@ -357,7 +357,7 @@ public abstract class TriggeredAbilityImpl extends AbilityImpl implements Trigge
             //  - check and fix many broken (is it was a false positive test or something broken)
             //sourceObject = (Permanent) game.getLastKnownInformation(source.getSourceId(), Zone.BATTLEFIELD);
             if (game.getShortLivingLKI(source.getSourceId(), Zone.BATTLEFIELD)) {
-                sourceObject = (Permanent) game.getLastKnownInformation(source.getSourceId(), Zone.BATTLEFIELD);
+                sourceObject = game.getLastKnownInformation(source.getSourceId(), Zone.BATTLEFIELD);
             }
         }
         if (sourceObject == null) { // source is no permanent
@@ -376,9 +376,8 @@ public abstract class TriggeredAbilityImpl extends AbilityImpl implements Trigge
                 && !(sourceObject instanceof PermanentToken) // it's no token
                 && sourceObject.getZoneChangeCounter(game) + 1 == game.getState().getZoneChangeCounter(source.getSourceId())) { // It's in the next zone
             Zone after = game.getState().getZone(source.getSourceId());
-            if (!Zone.GRAVEYARD.match(after)) { // Zone is not the graveyard
-                return false; // Moving to graveyard was replaced so no trigger
-            }
+            // Zone is not the graveyard
+            return Zone.GRAVEYARD.match(after); // Moving to graveyard was replaced so no trigger
         }
 
         return true;

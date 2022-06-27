@@ -98,7 +98,7 @@ public class Spell extends StackObjectImpl implements Card {
         this.countered = false;
     }
 
-    public Spell(final Spell spell) {
+    private Spell(final Spell spell) {
         this.id = spell.id;
         this.zoneChangeCounter = spell.zoneChangeCounter;
         for (SpellAbility spellAbility : spell.spellAbilities) {
@@ -802,7 +802,7 @@ public class Spell extends StackObjectImpl implements Card {
         Card copiedPart = (Card) mapOldToNew.get(this.card.getId());
 
         // copy spell
-        Spell spellCopy = new Spell(copiedPart, this.ability.copySpell(this.card, copiedPart), this.controllerId, this.fromZone, game);
+        Spell spellCopy = new Spell(copiedPart, this.ability.copySpell(this.card, copiedPart), this.controllerId, null, game);
         boolean firstDone = false;
         for (SpellAbility spellAbility : this.getSpellAbilities()) {
             if (!firstDone) {

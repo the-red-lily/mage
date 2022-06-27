@@ -7,7 +7,6 @@ import mage.game.stack.Spell;
 import mage.game.stack.StackObject;
 
 /**
- *
  * @author BetaSteward
  */
 public class SpellZonePredicate implements Predicate<StackObject> {
@@ -20,7 +19,7 @@ public class SpellZonePredicate implements Predicate<StackObject> {
 
     @Override
     public boolean apply(StackObject input, Game game) {
-        return input instanceof Spell && ((Spell) input).getFromZone().match(zone);
+        return input instanceof Spell && zone.match(((Spell) input).getFromZone());
     }
 
     @Override

@@ -71,8 +71,7 @@ class ApproachOfTheSecondSunEffect extends OneShotEffect {
             return false;
         }
         //If this spell was cast from your hand and you've cast another spell named {this} this game
-        if (!spell.isCopy() //TODO: copied spells should not be "from" hand
-                && spell.getFromZone() == Zone.HAND
+        if (spell.getFromZone() == Zone.HAND
                 && watcher.getApproachesCast(controller.getId()) > 1) {
             // Win the game
             controller.won(game);

@@ -133,7 +133,7 @@ class PortcullisReturnToBattlefieldTriggeredAbility extends DelayedTriggeredAbil
 
     @Override
     public boolean checkTrigger(GameEvent event, Game game) {
-        if (((ZoneChangeEvent) event).getFromZone().match(Zone.BATTLEFIELD)) {
+        if (Zone.BATTLEFIELD.match(((ZoneChangeEvent) event).getFromZone())) {
             return (fixedTarget.getTarget().equals(event.getTargetId()));
         }
         return false;
